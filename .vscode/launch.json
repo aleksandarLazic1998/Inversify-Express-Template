@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node-terminal",
+      "name": "Debug Current TS File (ts-node)",
+      "request": "launch",
+      "command": "yarn dev",
+      "cwd": "${fileDirname}"
+    }
+  ]
+}
+
+// const response = await axios.get(
+//   "https://rest-test-eight.vercel.app/api/test"
+// );
+
+// const data = response.data.items.map((item: { fileUrl: string }) => {
+//   return unorm.nfkd(item.fileUrl).replace(/[^\x00-\x7F]/g, "");
+// });
+
+// const transformedData = transformData(data);
