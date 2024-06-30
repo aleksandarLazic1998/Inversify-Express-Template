@@ -1,6 +1,8 @@
-function mergeObjectsWithSameKeys(arr: any[]) {
-  const mergedObject = {};
-  const result = [];
+function mergeObjectsWithSameKeys(
+  arr: (string | Record<string, any>)[]
+): any[] {
+  const mergedObject: Record<string, any> = {};
+  const result: any[] = [];
 
   for (const item of arr) {
     if (typeof item === "string") {
@@ -10,7 +12,11 @@ function mergeObjectsWithSameKeys(arr: any[]) {
         if (!mergedObject[key]) {
           mergedObject[key] = [];
         }
-        mergedObject[key] = mergedObject[key].concat(item[key]);
+        if (Array.isArray(item[key])) {
+          mergedObject[key] = mergedObject[key].concat(item[key]);
+        } else {
+          mergedObject[key].push(item[key]);
+        }
       }
     }
   }
@@ -20,7 +26,10 @@ function mergeObjectsWithSameKeys(arr: any[]) {
 
     const filteredArray = mergedArray.filter(
       (element: string | number) =>
-        !(typeof element === "string" && mergedObject[element])
+        !(
+          typeof element === "string" &&
+          Object.keys(mergedObject).includes(element as string)
+        )
     );
 
     result.push({ [key]: filteredArray });
