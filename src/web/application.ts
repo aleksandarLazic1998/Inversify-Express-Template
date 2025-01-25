@@ -5,20 +5,20 @@ import { InversifyExpressServer } from "inversify-express-utils";
 import {
   Application,
   IAbstractApplicationOptions,
-  MorganMode,
 } from "./lib/abstract-application";
 import { Container } from "inversify";
 
-import "./controllers/files.controller";
+import "./controllers/some.controller";
 
 import { BaseHttpResponse } from "./lib/base-http-response";
 
 import morgan from "morgan";
-import { FilesService } from "../logic/services/files.services";
 import {
   CouldNotFindFilesException,
   ValidationException,
 } from "../logic/exceptions";
+import { MorganMode } from "../typescript/enums/morgan-mode";
+import { SomeService } from "../logic/services/some.services";
 
 export class App extends Application {
   constructor() {
@@ -29,7 +29,7 @@ export class App extends Application {
   }
 
   configureServices(container: Container): void {
-    container.bind(FilesService).toSelf();
+    container.bind(SomeService).toSelf();
   }
 
   async setup(options: IAbstractApplicationOptions) {
