@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login Demo</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        text-align: center;
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Login Demo</h1>
+    <button id="loginBtn">Login with Azure AD</button>
+    <script>
+      document
+        .getElementById("loginBtn")
+        .addEventListener("click", function () {
+          // This endpoint triggers the Passport authentication flow.
+          window.location.href = "/auth/login";
+        });
+    </script>
+  </body>
+</html>

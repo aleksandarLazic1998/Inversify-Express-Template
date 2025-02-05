@@ -1,7 +1,9 @@
+import { CorsOptions } from "cors";
 import { Container, interfaces } from "inversify";
 import { MorganMode } from "src/typescript/enums/morgan-mode";
 
 export interface IAbstractApplicationOptions {
+  corsOptions: CorsOptions;
   containerOpts: interfaces.ContainerOptions;
   morgan: { mode: MorganMode };
 }

@@ -1,4 +1,8 @@
 import express, { NextFunction, Request, Response } from "express";
+import cors from "cors";
+import session from "express-session";
+import cookieParser from "cookie-parser";
+import passport from "passport";
 
 import { InversifyExpressServer } from "inversify-express-utils";
 
@@ -21,10 +25,14 @@ import { MorganMode } from "../typescript/enums/morgan-mode";
 import { SomeService } from "../logic/services/some.services";
 import { AuthService } from "../logic/services/auth.service";
 import { AuthController } from "./controllers/auth.controller";
+import helmet from "helmet";
+import corsOptions from "../constants/cors.constants";
+import PassportAzureActiveDirectoryStrategy from "../config/passport.config";
 
 export class App extends Application {
   constructor() {
     super({
+      corsOptions: corsOptions,
       containerOpts: { defaultScope: "Singleton" },
       morgan: { mode: MorganMode.DEV },
     });
@@ -66,8 +74,19 @@ export class App extends Application {
     });
 
     server.setConfig((app) => {
+      // Library specific
       app.use(express.json());
       app.use(morgan(options.morgan.mode));
+      app.use(helmet());
+      app.use(cors(options.corsOptions));
+      app.use(cookieParser());
+
+      app.use(express.static("public"));
+
+      app.use(passport.initialize());
+      passport.use(PassportAzureActiveDirectoryStrategy);
+
+      // Global custom made
     });
 
     const app = server.build();
