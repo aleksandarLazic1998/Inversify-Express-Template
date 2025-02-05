@@ -19,6 +19,8 @@ import {
 } from "../logic/exceptions";
 import { MorganMode } from "../typescript/enums/morgan-mode";
 import { SomeService } from "../logic/services/some.services";
+import { AuthService } from "../logic/services/auth.service";
+import { AuthController } from "./controllers/auth.controller";
 
 export class App extends Application {
   constructor() {
@@ -28,13 +30,18 @@ export class App extends Application {
     });
   }
 
+  configureControllers(container: Container): void {
+    container.bind(AuthController).toSelf();
+  }
+
   configureServices(container: Container): void {
     container.bind(SomeService).toSelf();
+    container.bind(AuthService).toSelf();
   }
 
   async setup(options: IAbstractApplicationOptions) {
     const server = new InversifyExpressServer(this.container, null, {
-      rootPath: "/api",
+      rootPath: "/api/v1",
     });
 
     server.setErrorConfig((app) => {

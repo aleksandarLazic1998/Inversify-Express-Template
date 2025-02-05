@@ -13,9 +13,11 @@ export abstract class Application {
     this.container = new Container(options.containerOpts);
 
     this.configureServices(this.container);
+    this.configureControllers(this.container);
     this.setup(options);
   }
 
   abstract configureServices(container: Container): void;
+  abstract configureControllers(container: Container): void;
   abstract setup(options: IAbstractApplicationOptions): Promise<void> | void;
 }
