@@ -27,7 +27,6 @@ import { AuthService } from "../logic/services/auth.service";
 import { AuthController } from "./controllers/auth.controller";
 import helmet from "helmet";
 import corsOptions from "../constants/cors.constants";
-import PassportAzureActiveDirectoryStrategy from "../config/passport.config";
 
 export class App extends Application {
   constructor() {
@@ -82,11 +81,6 @@ export class App extends Application {
       app.use(cookieParser());
 
       app.use(express.static("public"));
-
-      app.use(passport.initialize());
-      passport.use(PassportAzureActiveDirectoryStrategy);
-
-      // Global custom made
     });
 
     const app = server.build();
